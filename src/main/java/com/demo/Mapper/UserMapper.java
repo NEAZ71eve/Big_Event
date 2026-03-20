@@ -44,5 +44,5 @@ public interface UserMapper { // 注意：这里应该是 interface，不是 cla
 
     //更新密码
     @Update("update user set password = #{newPassword},update_time = now() where id = #{id}")
-    void updatePwd(@Pattern(regexp = "newPassword")String newPassword,@Pattern("id") Integer id);
+    void updatePwd(@Pattern(regexp = "newPassword")String newPassword,@Pattern(regexp = "id") Integer id);
 }

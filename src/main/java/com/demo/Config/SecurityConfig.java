@@ -18,8 +18,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())                       //使用lambda关闭csrf
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  //设置会话无状态，适合JWT认证
                 .authorizeRequests(authorize -> authorize
-                    .requestMatchers("/user/register", "/user/login").permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
                 );
         
         return httpSecurity.build();

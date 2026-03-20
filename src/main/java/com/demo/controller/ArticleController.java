@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import com.demo.entity.Category;
 import com.demo.entity.Result;
 import org.springframework.web.bind.annotation.*;
 
