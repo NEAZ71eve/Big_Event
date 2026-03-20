@@ -1,4 +1,4 @@
-/*package com.demo.Config;
+package com.demo.Config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +16,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
                 .csrf(csrf -> csrf.disable())                       //使用lambda关闭csrf
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)  //设置会话无状态，适合JWT认证
-                        .
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  //设置会话无状态，适合JWT认证
+                .authorizeRequests(authorize -> authorize
+                    .requestMatchers("/user/register", "/user/login").permitAll()
+                    .anyRequest().authenticated()
+                );
+        
+        return httpSecurity.build();
     }
-
 }
-*/

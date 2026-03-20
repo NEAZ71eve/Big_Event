@@ -15,6 +15,7 @@ public class User {
     private Integer id;
     private String username;
     @JsonIgnore             //SpringMVC 将当前对象转为json时候忽略password
+    @Pattern(regexp = "^//${1,10}$")
     private String password;
     @NotEmpty
     @Pattern(regexp = "^\\${1,10}$")

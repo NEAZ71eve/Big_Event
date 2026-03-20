@@ -2,12 +2,11 @@ package com.demo.Service.impl;
 
 import com.demo.Mapper.UserMapper;
 import com.demo.Service.UserService;
+import com.demo.entity.Result;
 import com.demo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 
 @Service
@@ -37,5 +36,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateAvatar(String avatarUrl,Integer id){
         userMapper.updateAvatar(avatarUrl,id);
+    }
+
+    @Override
+    public void updatePwd(String new_password, Integer id) {
+        userMapper.updatePwd(passwordEncode.encode(new_password),id);
     }
 }

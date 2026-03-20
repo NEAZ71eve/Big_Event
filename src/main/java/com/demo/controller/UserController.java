@@ -8,6 +8,7 @@ import com.demo.entity.User;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,6 +85,31 @@ public class UserController {
         } catch (Exception e){
             return Result.error("更新失败");
         }
+        return Result.success();
+    }
+    //更新用户密码
+    @PatchMapping("/updatePwd")
+    public Result updatePwd(Map<String,String> params){
+        //1.校验参数
+        String new_password = params.get("new_password");
+        String old_password = params.get("old_password");
+        String re_password = params.get("re_password");
+        if(!StringUtils.hasLength(new_password) || !StringUtils.hasLength(old_password) || !StringUtils.hasLength(re_password)){
+            return Result.error("缺少必要参数");
+        }
+        //2.检察院密码是否正确
+        Map<String,Object> map = ThreadLocalUtil.get();
+        User loginUser = userService.findUserByUserName((String) map.get("username"));
+        String password = loginUser.getPassword();
+        if (passwordEncoder.encode(old_password) == password){
+            return Result.error("原密码不正确");
+        }
+        //3.new和re是否一样
+        if (new_password == re_password){
+            return Result.error("两次输入密码不一致");
+        }
+        //4.调用service层服务
+        userService.updatePwd(new_password, loginUser.getId());
         return Result.success();
     }
 }

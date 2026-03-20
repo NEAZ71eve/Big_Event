@@ -1,6 +1,7 @@
 package com.demo.Mapper;
 
 import com.demo.entity.User;
+import jakarta.validation.constraints.Pattern;
 import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDateTime;
@@ -40,4 +41,8 @@ public interface UserMapper { // 注意：这里应该是 interface，不是 cla
     //更换用户头像
     @Update("update user set user_pic = #{avatarUrl},update_time = now() where id = #{id}")
     void updateAvatar(@Param("avatarUrl")String avatarUrl,@Param("id")Integer id);
+
+    //更新密码
+    @Update("update user set password = #{newPassword},update_time = now() where id = #{id}")
+    void updatePwd(@Pattern(regexp = "newPassword")String newPassword,@Pattern("id") Integer id);
 }
